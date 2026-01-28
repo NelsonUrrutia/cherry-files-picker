@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cherry_files_picker"
+version = "2026.0.1"
+
+[project.scripts]
+cherry-files-picker = "cherry_files_picker.main:main"

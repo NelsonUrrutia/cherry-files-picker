@@ -57,6 +57,6 @@ def get_file_path():
 
 def init_files_utils():
     """Initialize Files utils module"""
-    print("\n--{BOLD}2. FILES SETTINGS{ENDBOLD} --\n")
+    print(f"\n--{BOLD}2. FILES SETTINGS{ENDBOLD} --\n")
     print(" • Register the files path to merge")
     get_file_path()

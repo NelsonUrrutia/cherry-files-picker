@@ -18,7 +18,7 @@ def get_commit_description():
 
 def init_git_commit_module():
     """Initialize Commit utils module"""
-    print("\n-- {BOLD}3.COMMIT SETTINGS{ENDBOLD} --\n")
+    print(f"\n-- {BOLD}3.COMMIT SETTINGS{ENDBOLD} --\n")
     print(" • Enter commit's title and description")
     get_commit_title()
     get_commit_description()

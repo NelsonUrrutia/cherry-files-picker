@@ -47,6 +47,6 @@ def get_target_branch():
 
 def init_branch_utils():
     """Initialize Git Branch module"""
-    print("\n-- {BOLD}1. BRANCH SETTINGS{BOLD} --\n")
+    print(f"\n-- {BOLD}1. BRANCH SETTINGS{BOLD} --\n")
     get_source_branch()
     get_target_branch()

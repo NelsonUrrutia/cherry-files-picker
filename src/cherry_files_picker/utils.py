@@ -7,7 +7,7 @@ from .helpers import BOLD, ENDBOLD
 
 def init_cherry_files_picker():
     """
-    Initialize tool 
+    Initialize tool
     """
     # Print welcome message
     print("\n-------------------------------")

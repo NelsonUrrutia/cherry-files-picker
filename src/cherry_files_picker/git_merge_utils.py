@@ -75,7 +75,7 @@ def init_merging():
 
 def show_summary():
     """Shows data summary"""
-    print(f"\n-- {BOLD}5. SUMMARY{ENDBOLD} --\n")
+    print(f"\n-- {BOLD}SUMMARY{ENDBOLD} --\n")
 
     print(f"{BOLD}BRANCH SETTINGS{ENDBOLD}")
     print(f" • Source branch: {get_cherry_picker_data('source_branch')}")

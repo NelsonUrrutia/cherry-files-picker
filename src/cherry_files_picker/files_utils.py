@@ -1,4 +1,5 @@
 import os
+import fnmatch
 
 from .cherry_picker_data import (
     get_cherry_picker_data_files,
@@ -38,21 +39,28 @@ def get_files_content():
 
 
 def get_file_path():
-    """Retrieves file path"""
-    file_path = get_user_input("File path", f"\n{BOLD}File path:{ENDBOLD} ", True)
-    valid_file_path = validate_file_path(file_path)
-    if valid_file_path:
-        set_cherry_picker_data_file(file_path)
-        print(f" > File path {BOLD}{file_path}{ENDBOLD} registered")
-        continue_registration = continue_file_path_registration()
-        if continue_registration:
-            get_file_path()
-    else:
-        print(f" > File path {BOLD}{file_path}{ENDBOLD} doesn't exists")
-        print(f"   Did not register {BOLD}{file_path}{ENDBOLD}")
-        continue_registration = continue_file_path_registration()
-        if continue_registration:
-            get_file_path()
+    print(os.getcwd())
+    """Retrieves file"""
+    file_name = get_user_input("File name", f"\n{BOLD}File name:{ENDBOLD} ", True)
+    matching_files = []
+    for root, dirs, files in os.walk(os.getcwd()):
+        for f in files:
+            if fnmatch.fnmatch(f, file_name):
+                matching_files.append(os.path.join(root, f))
+    print(matching_files)
+    # valid_file_path = validate_file_path(file_path)
+    # if valid_file_path:
+    #     set_cherry_picker_data_file(file_path)
+    #     print(f" > File path {BOLD}{file_path}{ENDBOLD} registered")
+    #     continue_registration = continue_file_path_registration()
+    #     if continue_registration:
+    #         get_file_path()
+    # else:
+    #     print(f" > File path {BOLD}{file_path}{ENDBOLD} doesn't exists")
+    #     print(f"   Did not register {BOLD}{file_path}{ENDBOLD}")
+    #     continue_registration = continue_file_path_registration()
+    #     if continue_registration:
+    #         get_file_path()
 
 
 def init_files_utils():

@@ -15,7 +15,7 @@ def validate_file_path(file_path: str):
 def continue_file_path_registration():
     u_option = get_user_input(
         "Valid option [y/N]",
-        f"\n{BOLD}Continue registration process? [y/N]:{ENDBOLD} ",
+        f"\n{BOLD}Would you like to add another files? [y/N]:{ENDBOLD} ",
         True,
     )
     if u_option == "y" or u_option.capitalize() == "Y":
@@ -36,50 +36,66 @@ def get_files_content():
             files_and_content[f] = content
     return files_and_content
 
-
 def get_file_path():
     """Retrieves file"""
     current_working_directory = "./"
-    file_name = get_user_input("File name", f"\n{BOLD}File name:{ENDBOLD} ", True)
     matching_files = []
+
+    file_name = get_user_input("Enter part or all of the file name", f"\n{BOLD}Search for a file:{ENDBOLD} ", True)
     
-    for root, dirs, files in os.walk(current_working_directory):
-        for file in files:
-            if file_name in file:
+    selected_files = get_cherry_picker_data_files()
+    if len(selected_files) > 0:
+        print(f"\n {BOLD}Selected files:{ENDBOLD}")
+        for selected in selected_files:
+            print(f" > {selected}")
+    
+
+    for root, _, files in os.walk(current_working_directory):
+        for fname in files:
+            if file_name in fname:
                 file_obj = {
-                    "src": os.path.join(root, file),
-                    "name": file
+                    "src": os.path.join(root, fname),
+                    "name": fname
                 }
                 matching_files.append(file_obj)
                 
-    
     if not len(matching_files):
-        print(f" > File(s) {BOLD}{file_name}{ENDBOLD} doesn't exists")
+        print(f" > No files found matching {BOLD}{file_name}{ENDBOLD}.")
+        print("    You can try a shorter or more general name.")
         get_file_path()
         
     
-    print(f"\n{BOLD}Marching files:{ENDBOLD}\n")
-    print(f" {BOLD}INDEX{ENDBOLD} {BOLD}FILE{ENDBOLD}")
-    for i, f in enumerate( matching_files):
-        print(f"  [{i}]   {f.get("name")}")
-        print(f"          {f.get("src")}")
-        print("------------------------------------------")
-    files_indexes = get_user_input("File index", f"\nSelect the file(s) using their index. Use a comma to separate them: ", True)        
+    print(f"\n{BOLD}Matching files found:{ENDBOLD}\n")
+    print(f" {BOLD}INDEX{ENDBOLD} {BOLD}FILE NAME{ENDBOLD}\n")
+    for i, f in enumerate(matching_files):
+        print(f"  [{i}]   {f['name']}")
+        print(f"          > Path: {f['src']}\n")
+    
+    raw_indexes = get_user_input("File index", f"\nSelect file indexes (comma-separated for multiple): ", True)        
 
-    print(f"\n Files selected")
-    for i in  files_indexes.split(","):
-        index = int(i)
-        if matching_files[index]:
-            match_file = matching_files[index].get("name")
-            print(f" > {match_file}")
-            set_cherry_picker_data_file(matching_files[index].get("src"))
-        
+    indexes = []
+    invalid_indexes = []
+
+    for part in  raw_indexes.split(","):
+        part = part.strip()
+        if part.isdigit():
+            indexes.append(int(part))
+
+    for index in indexes:
+        if  index < len(matching_files):
+            selected = matching_files[index]
+            print(f" > Added: {selected['name']}")
+            set_cherry_picker_data_file(selected["src"])
+        else:
+            invalid_indexes.append(f"{index}")
+
+    if len(invalid_indexes) > 0:
+        print(f"Invalid index(es): {", ".join(invalid_indexes)}")
+
+    if continue_file_path_registration():
+        return get_file_path()
     
-    continue_registration = continue_file_path_registration()
-    if continue_registration:
-        get_file_path()
-    else:
-        print(get_cherry_picker_data("files"))
+    print(get_cherry_picker_data("files"))
 
     
     # file_name = get_user_input("File name", f"\n{BOLD}File name:{ENDBOLD} ", True)

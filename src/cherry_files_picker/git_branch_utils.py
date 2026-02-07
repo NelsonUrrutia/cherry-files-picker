@@ -4,6 +4,25 @@ from .cherry_picker_data import set_cherry_picker_data
 from .helpers import BOLD, ENDBOLD, get_user_input
 
 
+
+def print_available_branches(branches):
+    print(f" {BOLD}INDEX{ENDBOLD}  {BOLD}BRANCH{ENDBOLD}")
+    for i, branch in enumerate(branches):
+        branch_name = branch
+        if "*" in branch_name:
+            print(f" [{i}]     {BOLD}{branch_name}{ENDBOLD}")
+        else:
+            print(f" [{i}]     {branch_name}")
+        
+
+
+def show_available_branches():
+    result = subprocess.run(["git", "branch", "--list"], capture_output=True, text=True)
+    branches = [line.strip() for line in result.stdout.splitlines()]
+    print_available_branches(branches)
+    
+
+
 def validate_branch(branch):
     """Validate git branch"""
     result = subprocess.run(
@@ -48,5 +67,20 @@ def get_target_branch():
 def init_branch_utils():
     """Initialize Git Branch module"""
     print(f"\n-- {BOLD}1. BRANCH SETTINGS{BOLD} --\n")
-    get_source_branch()
-    get_target_branch()
+    
+    show_available_branches()
+    
+    source_branch_index = get_user_input("Source branch index", f"\nSelect {BOLD}source branch.{ENDBOLD} Use the index: ", True)        
+    # validate index
+    # repeat if not valid
+    # show selected branch
+    # continue with target branch
+    target_branch_index = get_user_input("Target branch index", f"\nSelect {BOLD}target branch.{ENDBOLD} Use the index: ", True)        
+    # validate index 
+    # repeat if not valid
+    # show selected branch
+    # continue process
+
+
+    # get_source_branch()
+    # get_target_branch()

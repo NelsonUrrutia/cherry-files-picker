@@ -18,10 +18,10 @@ def init_cherry_files_picker():
     init_branch_utils()
 
     # Get files to merge
-    # init_files_utils()
+    init_files_utils()
 
     # Get commit message
-    # init_git_commit_module()
+    init_git_commit_module()
 
     # Init merging state
-    # init_git_merge_module()
+    init_git_merge_module()

@@ -1,4 +1,5 @@
 import os
+import questionary
 
 from .cherry_picker_data import (
     get_cherry_picker_data_files,
@@ -91,30 +92,39 @@ def get_files_content():
 
 def get_file_path():
     """Retrieves file"""
-    file_name = get_user_input(
-        "Enter part or all of the file name",
-        f"\n{BOLD}Search for a file:{ENDBOLD} ",
-        True,
-    )
-    matching_files = search_files(file_name)
 
-    if not len(matching_files):
-        print(f" > No files found matching {BOLD}{file_name}{ENDBOLD}.")
-        print("    You can try a shorter or more general name.")
-        return get_file_path()
+    while True:
+        file_path = questionary.path("Select a file").ask()
+        if file_path == "END" or file_path == "end":
+            break
+        set_cherry_picker_data_file(file_path)
+        
+    # file_name = get_user_input(
+    #     "Enter part or all of the file name",
+    #     f"\n{BOLD}Search for a file:{ENDBOLD} ",
+    #     True,
+    # )
+    # matching_files = search_files(file_name)
 
-    print_matching_files(matching_files)
+    # if not len(matching_files):
+    #     print(f" > No files found matching {BOLD}{file_name}{ENDBOLD}.")
+    #     print("    You can try a shorter or more general name.")
+    #     return get_file_path()
 
-    print_selected_files()
+    # print_matching_files(matching_files)
 
-    register_files(matching_files)
+    # print_selected_files()
 
-    if continue_file_path_registration():
-        return get_file_path()
+    # register_files(matching_files)
+
+    # if continue_file_path_registration():
+        # return get_file_path()
 
 
 def init_files_utils():
     """Initialize Files utils module"""
     print(f"\n--{BOLD}2. FILES SETTINGS{ENDBOLD} --\n")
     print(" • Register the files path to merge")
+    print(" • Use TAB to navigate and ENTER to select")
+    print(" • Type END or end to stop the selecting process \n")
     get_file_path()

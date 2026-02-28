@@ -10,6 +10,7 @@ readme = "README.md"
 authors = [{name = "Nelson Urrutia"}]
 license = { file = "LICENSE" }
 keywords = ["git", "version-control","developer-tools", "cli" ]
+dependencies = ["questionary"]
 
 
 

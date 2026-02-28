@@ -4,23 +4,14 @@
 
 ## The idea
 
-Cherry Files Picker CLI draws inspiration from Git's `cherry pick` command but with a different goal.
-
 I often encountered a scenario where a file or several files were modified across multiple commits. And by the time they where ready to push to production, I had to manually select all the commits related to those files, to `cherry pick` them and merge them into production.
 
 Then, I realized what I really wanted was the final result, the approved code version of the files, not the detailed history of commits.
 
+Cherry Files Picker CLI draws inspiration from Git's `cherry pick` command but with a different goal. The core idea of the project is to **emphasizes data over history**.
+
 Yes, there're probably git commands that can achieve similar results, and maybe I'm just to lazy to search them.
 Nevertheless my goal with this project is to improve my workflow, create a useful tool and feel accomplishment from the fact of having an idea and make it a reality.
-
-## Technical Overview
-
-This project addresses the need to gather all commits related to the same files. Instead of cherry-picking each commit, this tool extracts the latest versions of specified files from a source branch and applies them to a target branch in a single, clean commit. The original commit history remains untouched in the source branch.
-
-- The full commit history stays in the source branch.
-- The target branch receives just one commit with the final versions of the files and a reference from the source branch.
-
-The core idea of the project is to **emphasizes data over history**.
 
 ## How it works
 
@@ -113,6 +104,4 @@ OR
 
 These are potential enhancements, not part of the current scope:
 
-- **Autocomplete for file paths** based on the source branch.
-- **Interactive branch selection** from a list instead of manual typing.
 - Publish it on [PyPi](https://pypi.org/)
